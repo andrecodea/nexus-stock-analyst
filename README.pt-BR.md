@@ -117,7 +117,7 @@ sequenceDiagram
 - **Framework**: FastAPI
 - **IA/ML**: LangChain, LangGraph, API OpenAI
 - **Fontes de Dados**: yfinance (dados de mercado), Tavily (busca web)
-- **Linguagem**: Python 3.13+
+- **Linguagem**: Python 3.10+
 - **Gerenciador de Pacotes**: uv / pip
 
 ### Frontend
@@ -130,7 +130,7 @@ sequenceDiagram
 ## 📋 Pré-requisitos
 
 - **Node.js** 18+ (para frontend)
-- **Python** 3.13+ (para backend)
+- **Python** 3.10+ (para backend)
 - **Chave API OpenAI** ou endpoint LLM compatível
 - **Chave API Tavily** (para funcionalidade de busca web)
 

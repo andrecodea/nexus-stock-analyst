@@ -179,7 +179,7 @@ backend/
 
 ### Prerequisites
 
-- Python 3.13+ (or 3.10+)
+- Python 3.10+
 - OpenAI API key
 - Tavily API key (for web search)
 
