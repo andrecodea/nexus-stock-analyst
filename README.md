@@ -286,6 +286,14 @@ taskkill /PID <PID> /F
 - Use `backend/.env.example` as the template for environment variables
 - Add `.env` files to `.gitignore` (already configured)
 
+📋 **Security Resources:**
+
+- See [SECURITY.md](./SECURITY.md) for comprehensive security guidelines and best practices
+- See [VALIDATION_REPORT.md](./VALIDATION_REPORT.md) for security validation results
+- Review the production deployment checklist before going live
+
+The project has been validated for data leaks and security vulnerabilities. See the validation report for details.
+
 ## 🤝 Contributing
 
 1. Fork the repository
