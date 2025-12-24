@@ -38,3 +38,11 @@ Security & Git history
 Notes
 - Do NOT commit `.env` or any secret files. Use `.env.example` as a template.
 - If you want help scanning for other secrets or automating key rotation, ask and I can run a deeper scan.
+
+Important: Environment file
+- Use `backend/.env.example` as the canonical template for environment variables. Do NOT commit `backend/.env` or any files containing real secrets.
+- The repository has had its history rewritten to remove a previously committed `.env`; if you suspect keys were exposed, rotate them immediately.
+- After a history rewrite, collaborators should re-clone the repo to avoid conflicts:
+  ```bash
+  git clone https://github.com/andrecodea/nexus-financial-analyst.git
+  ```

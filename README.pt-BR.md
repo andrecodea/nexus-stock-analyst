@@ -39,3 +39,11 @@ Observações
 - Nunca comite arquivos `.env` ou outros arquivos com segredos. Use `.
 .env.example` como modelo.
 - Posso executar uma varredura mais profunda por segredos ou gerar instruções para rotacionar chaves, se desejar.
+
+Aviso importante: Arquivo de ambiente
+- Use `backend/.env.example` como o modelo canônico para variáveis de ambiente. NÃO comite `backend/.env` ou qualquer arquivo com segredos reais.
+- O repositório teve o histórico reescrito para remover um `.env` que foi comitado anteriormente; se você suspeita que chaves foram expostas, rotacione-as imediatamente.
+- Após a reescrita do histórico, colaboradores devem clonar novamente o repositório para evitar conflitos:
+  ```bash
+  git clone https://github.com/andrecodea/nexus-financial-analyst.git
+  ```
