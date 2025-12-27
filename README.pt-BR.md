@@ -13,6 +13,12 @@ Nexus Financial Analyst é uma plataforma inteligente de análise financeira que
 
 O sistema usa agentes LangChain com ferramentas especializadas para buscar dados em tempo real do yfinance e Tavily, fornecendo insights baseados em dados com respostas conscientes de conformidade.
 
+## 🎥 Demonstração em Vídeo
+
+Veja a plataforma em ação:
+
+https://github.com/user-attachments/assets/nexus-financial-analyst-demo.mp4
+
 ## 🏗️ Arquitetura
 
 ```mermaid

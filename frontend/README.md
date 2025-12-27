@@ -6,6 +6,12 @@ React + TypeScript + Vite frontend for the Nexus Financial Analyst platform.
 
 The frontend provides an interactive chat interface for financial analysis using the GenUI SDK. It communicates with the FastAPI backend to deliver real-time AI-powered stock analysis, market briefings, and comparative analytics.
 
+## 🎥 Video Demonstration
+
+See the platform in action:
+
+https://github.com/user-attachments/assets/nexus-financial-analyst-demo.mp4
+
 ## 🏗️ Architecture
 
 ```mermaid
