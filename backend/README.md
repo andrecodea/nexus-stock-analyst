@@ -6,6 +6,12 @@ FastAPI backend with LangChain agents for intelligent financial analysis.
 
 The backend provides an AI-powered financial analysis API using LangChain agents with specialized tools to fetch and analyze stock market data. It uses OpenAI's language models to deliver professional stock analysis, market briefings, and comparative analytics.
 
+## 🎥 Video Demonstration
+
+See the platform in action:
+
+https://github.com/user-attachments/assets/nexus-financial-analyst-demo.mp4
+
 ## 🏗️ Architecture
 
 ```mermaid
