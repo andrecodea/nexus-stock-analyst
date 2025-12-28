@@ -158,6 +158,7 @@ Comparative analysis of 2-4 stocks:
 - **FastAPI** - Modern async web framework
 - **LangChain** - Agent and tool orchestration
 - **LangGraph** - Agent workflow management
+- **LangSmith** - LLM observability and debugging
 - **OpenAI API** - Language model provider
 - **yfinance** - Stock market data
 - **Tavily** - Web search API
@@ -510,6 +511,7 @@ If yfinance returns empty data:
 
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [LangChain Documentation](https://python.langchain.com/)
+- [LangSmith Documentation](https://docs.smith.langchain.com/)
 - [yfinance Documentation](https://github.com/ranaroussi/yfinance)
 - [Tavily API](https://docs.tavily.com/)
 - [OpenAI API](https://platform.openai.com/docs)

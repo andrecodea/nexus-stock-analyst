@@ -115,7 +115,7 @@ sequenceDiagram
 
 ### Backend
 - **Framework**: FastAPI
-- **IA/ML**: LangChain, LangGraph, API OpenAI
+- **IA/ML**: LangChain, LangGraph, LangSmith, API OpenAI
 - **Fontes de Dados**: yfinance (dados de mercado), Tavily (busca web)
 - **Linguagem**: Python 3.10+
 - **Gerenciador de Pacotes**: uv / pip
@@ -319,6 +319,7 @@ Este projeto é fornecido como está para fins educacionais e de desenvolvimento
 ## 🙏 Agradecimentos
 
 - [LangChain](https://python.langchain.com/) - Framework de agentes
+- [LangSmith](https://www.langchain.com/langsmith) - Observabilidade e debugging de LLM
 - [yfinance](https://github.com/ranaroussi/yfinance) - Dados de mercado
 - [Tavily](https://tavily.com/) - API de busca web
 - [FastAPI](https://fastapi.tiangolo.com/) - Framework backend
