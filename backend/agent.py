@@ -40,10 +40,13 @@ def get_agent():
             f"Please check your .env file."
         )
     
-    # Configures AI model
+    # Configures AI model with optimizations for token usage
     model = ChatOpenAI(
             model = os.getenv('LLM_NAME', ""),
-            base_url = os.getenv('LLM_BASE_URL',"")
+            base_url = os.getenv('LLM_BASE_URL',""),
+            max_tokens = 2000,  # Limit response length to control output tokens
+            temperature = 0.3,   # Lower temperature for more concise, focused responses
+            streaming = True     # Enable streaming for better UX
         )
     
     # Initialize an in-memory saver to persist lightweight agent state/checkpoints

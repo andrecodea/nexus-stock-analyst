@@ -2,6 +2,7 @@
 from dotenv import load_dotenv
 from typing import AsyncGenerator
 import logging
+import time
 
 # Imports API and serving components
 import uvicorn
@@ -12,6 +13,7 @@ from fastapi.responses import StreamingResponse
 # Imports AI components
 from langchain.messages import SystemMessage, HumanMessage
 from langchain_core.runnables import RunnableConfig
+from langchain_community.callbacks import get_openai_callback
 from agent import get_agent
 
 # Imports data schemas
@@ -68,6 +70,8 @@ async def chat(request: RequestObject):
     Validates incoming `RequestObject`, enforces length limits and
     streams AI responses as server-sent events.
     """
+    start_time = time.time()
+    
     try:
         # Validate input content
         if not request.prompt.content:
@@ -83,6 +87,9 @@ async def chat(request: RequestObject):
                 detail="Message too long. Maximum 10000 characters allowed."
             )
         
+        # Log request info (without sensitive data)
+        logger.info(f"Processing chat request - Thread: {request.threadId}, Message length: {len(request.prompt.content)}")
+        
         # Configures the tread ID as a LangChain runnable
         config: RunnableConfig = {"configurable": {"thread_id": request.threadId}}
 
@@ -91,6 +98,9 @@ async def chat(request: RequestObject):
             SystemMessage(content=system_message),
             HumanMessage(content=request.prompt.content)
         ]
+        
+        # Track token usage
+        total_tokens_used = {"input": 0, "output": 0, "total": 0}
 
         # Asyncronous stream generator
         async def generate() -> AsyncGenerator[str, None]:
@@ -100,20 +110,27 @@ async def chat(request: RequestObject):
             Exceptions are logged and re-raised to be handled by the caller.
             """
             try:
-                async for event in agent.astream_events(
-                    {"messages": messages},
-                    config=config,
-                    version="v1"
-                ): 
-                    kind = event["event"]
+                # Use callback to track token usage
+                with get_openai_callback() as cb:
+                    async for event in agent.astream_events(
+                        {"messages": messages},
+                        config=config,
+                        version="v1"
+                    ): 
+                        kind = event["event"]
 
-                    # Filters through text events
-                    if kind == "on_chat_model_stream":
-                        chunk = event["data"].get("chunk")
-                        if chunk:
-                            content = chunk.content
-                            if content:
-                                yield content
+                        # Filters through text events
+                        if kind == "on_chat_model_stream":
+                            chunk = event["data"].get("chunk")
+                            if chunk:
+                                content = chunk.content
+                                if content:
+                                    yield content
+                    
+                    # Update token tracking after stream completes
+                    total_tokens_used["input"] = cb.prompt_tokens
+                    total_tokens_used["output"] = cb.completion_tokens
+                    total_tokens_used["total"] = cb.total_tokens
 
             except Exception as e:
                 logger.error(f"Error in stream generation: {type(e).__name__}")
@@ -122,7 +139,7 @@ async def chat(request: RequestObject):
         
         # Return a streaming response: the generator yields AI model text
         # chunks which are forwarded as server-sent events (SSE).
-        return StreamingResponse(
+        response = StreamingResponse(
             generate(),
             media_type='text/event-stream',
             headers={
@@ -134,6 +151,18 @@ async def chat(request: RequestObject):
                 'X-XSS-Protection': '1; mode=block'
             }
         )
+        
+        # Log performance metrics after response
+        elapsed_time = time.time() - start_time
+        logger.info(
+            f"Request completed - "
+            f"Thread: {request.threadId}, "
+            f"Tokens (input/output/total): {total_tokens_used['input']}/{total_tokens_used['output']}/{total_tokens_used['total']}, "
+            f"Time: {elapsed_time:.2f}s"
+        )
+        
+        return response
+        
     except HTTPException:
         raise
     except Exception as e:
