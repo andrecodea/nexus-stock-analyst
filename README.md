@@ -4,7 +4,9 @@
 
 [🇧🇷 Versão em Português](./README.pt-BR.md)
 
-![Demo](nexus-financiala-analyst-demo-gif.gif)
+<div align="center">
+  <img src="./nexus-financial-analyst-demo-gif.gif" alt="Demo Nexus Financial Analyst" width="100%">
+</div>
 
 ## 🎯 Overview
 
