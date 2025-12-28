@@ -226,6 +226,26 @@ The agent has access to these specialized tools:
 | `get_stock_news` | Latest stock news | `ticker` |
 | `web_search` | Web search via Tavily | `query` |
 
+### 🚀 Token Optimization
+
+The system includes several optimizations to minimize token usage and reduce API costs:
+
+- **Optimized Tool Outputs**: All data retrieval tools return compact, structured summaries instead of raw data:
+  - Historical prices aggregated to monthly data points (~90% reduction)
+  - Balance sheets filtered to key metrics only (~85% reduction)
+  - News limited to 5 most recent articles (~70% reduction)
+  - Web search results truncated and limited (~60-80% reduction)
+
+- **Smart Model Configuration**: 
+  - Response length limits (`max_tokens=2000`)
+  - Optimized temperature for concise responses (`temperature=0.3`)
+
+- **Usage Monitoring**: Built-in token tracking logs input/output tokens for every request
+
+**Expected Impact**: ~75% reduction in input tokens compared to unoptimized implementation.
+
+📊 For detailed analysis, see [TOKEN_COST_ANALYSIS.md](./TOKEN_COST_ANALYSIS.md)
+
 ## 📝 API Endpoints
 
 ### POST `/api/chat`

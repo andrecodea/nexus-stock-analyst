@@ -224,6 +224,26 @@ O agente tem acesso a estas ferramentas especializadas:
 | `get_stock_news` | Notícias mais recentes da ação | `ticker` |
 | `web_search` | Busca web via Tavily | `query` |
 
+### 🚀 Otimização de Tokens
+
+O sistema inclui várias otimizações para minimizar o uso de tokens e reduzir custos de API:
+
+- **Saídas de Ferramentas Otimizadas**: Todas as ferramentas de recuperação de dados retornam resumos compactos e estruturados em vez de dados brutos:
+  - Preços históricos agregados em dados mensais (~90% de redução)
+  - Balanços filtrados apenas para métricas-chave (~85% de redução)
+  - Notícias limitadas aos 5 artigos mais recentes (~70% de redução)
+  - Resultados de busca web truncados e limitados (~60-80% de redução)
+
+- **Configuração Inteligente do Modelo**: 
+  - Limites de comprimento de resposta (`max_tokens=2000`)
+  - Temperatura otimizada para respostas concisas (`temperature=0.3`)
+
+- **Monitoramento de Uso**: Rastreamento integrado de tokens que registra tokens de entrada/saída para cada requisição
+
+**Impacto Esperado**: ~75% de redução em tokens de entrada comparado à implementação não otimizada.
+
+📊 Para análise detalhada, veja [TOKEN_COST_ANALYSIS.md](./TOKEN_COST_ANALYSIS.md)
+
 ## 📝 Endpoints da API
 
 ### POST `/api/chat`
