@@ -4,6 +4,8 @@
 
 [🇧🇷 Versão em Português](./README.pt-BR.md)
 
+![Demo](nexus-financiala-analyst-demo-gif.gif)
+
 ## 🎯 Overview
 
 Nexus Financial Analyst is an intelligent financial analysis platform that leverages AI agents to provide:
