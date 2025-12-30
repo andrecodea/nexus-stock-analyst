@@ -43,7 +43,7 @@ def get_agent():
     # Configures AI model
     model = ChatOpenAI(
             model = os.getenv('LLM_NAME', ""),
-            base_url = os.getenv('LLM_BASE_URL',"")
+            base_url = os.getenv('LLM_BASE_URL',""),
         )
     
     # Initialize an in-memory saver to persist lightweight agent state/checkpoints

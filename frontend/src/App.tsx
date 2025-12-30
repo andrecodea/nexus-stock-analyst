@@ -10,7 +10,11 @@ function App() {
   return (
     <div className='app-container'>
       <ThemeProvider mode='dark'>
-        <C1Chat apiUrl='/api/chat' agentName='Nexus Financial Analyst' logoUrl='src/assets/favicon.svg'/>
+        <C1Chat 
+        apiUrl='/api/chat' 
+        agentName='Nexus Financial Analyst'
+        logoUrl='src/assets/favicon.svg'
+        />
       </ThemeProvider>
     </div>
   )

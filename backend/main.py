@@ -60,6 +60,7 @@ except tomllib.TOMLDecodeError as e:
 except Exception as e:
     logger.error(f"Unexpected error loading prompt.toml: {type(e).__name__}: {e}")
 
+
 # Sets API endpoint as a POST request via async chat function
 @app.post('/api/chat')
 async def chat(request: RequestObject):
@@ -102,7 +103,7 @@ async def chat(request: RequestObject):
             try:
                 async for event in agent.astream_events(
                     {"messages": messages},
-                    config=config,
+                    config={"configurable": {"thread_id": request.threadId}},
                     version="v1"
                 ): 
                     kind = event["event"]
