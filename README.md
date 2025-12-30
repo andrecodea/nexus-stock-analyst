@@ -279,7 +279,7 @@ The agent has access to these specialized tools:
 | Tool | Description | Parameters |
 |------|-------------|------------|
 | `get_stock_price` | Real-time stock price | `ticker` (e.g., "NVDA") |
-| `get_historical_stock_price` | Historical price data with flexible granularity | `ticker`, `start_date`, `end_date`, `frequency` (daily/weekly/monthly*/quarterly) *default |
+| `get_historical_stock_price` | Historical price data with flexible granularity | `ticker`, `start_date`, `end_date`, `frequency` (daily/weekly/monthly/quarterly, default: monthly) |
 | `get_balance_sheet` | Company balance sheet | `ticker` |
 | `get_stock_news` | Latest stock news | `ticker` |
 | `web_search` | Web search via Tavily | `query` |

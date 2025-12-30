@@ -277,7 +277,7 @@ O agente tem acesso a estas ferramentas especializadas:
 | Ferramenta | Descrição | Parâmetros |
 |------------|-----------|------------|
 | `get_stock_price` | Preço de ação em tempo real | `ticker` (ex: "NVDA") |
-| `get_historical_stock_price` | Dados de preço histórico com granularidade flexível | `ticker`, `start_date`, `end_date`, `frequency` (diário/semanal/mensal*/trimestral) *padrão |
+| `get_historical_stock_price` | Dados de preço histórico com granularidade flexível | `ticker`, `start_date`, `end_date`, `frequency` (diário/semanal/mensal/trimestral, padrão: mensal) |
 | `get_balance_sheet` | Balanço patrimonial da empresa | `ticker` |
 | `get_stock_news` | Notícias mais recentes da ação | `ticker` |
 | `web_search` | Busca web via Tavily | `query` |
