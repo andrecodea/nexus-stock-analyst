@@ -314,7 +314,9 @@ O projeto foi validado quanto a vazamentos de dados e vulnerabilidades de segura
 
 ## 📄 Licença
 
-Este projeto é fornecido como está para fins educacionais e de desenvolvimento.
+Este projeto está licenciado sob a Licença Apache 2.0 - consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
+
+Copyright 2024 Nexus Financial Analyst Contributors
 
 ## 🙏 Agradecimentos
 

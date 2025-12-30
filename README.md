@@ -316,7 +316,9 @@ The project has been validated for data leaks and security vulnerabilities. See 
 
 ## 📄 License
 
-This project is provided as-is for educational and development purposes.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+Copyright 2024 Nexus Financial Analyst Contributors
 
 ## 🙏 Acknowledgments
 
