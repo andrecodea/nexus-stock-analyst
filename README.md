@@ -115,12 +115,41 @@ sequenceDiagram
 - Data limitation transparency
 - Follow-up questions to guide deeper analysis
 
+## 🚀 Key Features & Optimizations
+
+### 📦 Redis Caching
+The backend implements intelligent caching with Redis to improve performance:
+- **TTL-based cache**: Different cache durations for different data types
+  - Stock prices: 60 seconds (real-time data)
+  - Historical prices: 12 hours (relatively stable)
+  - Balance sheets: 24 hours (updated quarterly)
+  - News: 1 hour (frequent updates)
+- **Graceful degradation**: Falls back to no cache if Redis is unavailable
+- **Cache key generation**: MD5-based hashing for efficient lookups
+
+### ⚙️ TOML-based Configuration
+System prompts are managed via `prompt.toml` for easy customization:
+- Structured prompt definitions with workflows
+- UI/UX specifications for each analysis type
+- Compliance rules and output formatting
+- Easy to modify without changing code
+
+### 🎯 Flexible Data Granularity
+Historical price queries support multiple frequency options:
+- **Daily**: Up to 90 days (for short-term analysis)
+- **Weekly**: Up to 52 weeks (for medium-term trends)
+- **Monthly**: Up to 60 months (~5 years, default)
+- **Quarterly**: Up to 40 quarters (~10 years, for long-term analysis)
+- Automatic data point limiting to optimize token usage
+
 ## 🛠️ Technology Stack
 
 ### Backend
 - **Framework**: FastAPI
 - **AI/ML**: LangChain, LangGraph, LangSmith, OpenAI API
 - **Data Sources**: yfinance (market data), Tavily (web search)
+- **Cache**: Redis (optional, with TTL-based caching)
+- **Configuration**: TOML-based system prompts
 - **Language**: Python 3.10+
 - **Package Manager**: uv / pip
 
@@ -137,6 +166,7 @@ sequenceDiagram
 - **Python** 3.10+ (for backend)
 - **OpenAI API Key** or compatible LLM endpoint
 - **Tavily API Key** (for web search functionality)
+- **Redis** (optional, for caching - improves performance)
 
 ## 🚀 Setup & Installation
 
@@ -167,7 +197,35 @@ pip install -r requirements.txt
 pip install .
 ```
 
-### 3. Environment Configuration
+### 3. Redis Setup (Optional but Recommended)
+
+Redis caching improves performance by reducing API calls and speeding up responses.
+
+**Linux/WSL:**
+```bash
+sudo apt-get update
+sudo apt-get install redis-server
+sudo service redis-server start
+```
+
+**macOS:**
+```bash
+brew install redis
+brew services start redis
+```
+
+**Windows:**
+Download from [Redis for Windows](https://github.com/microsoftarchive/redis/releases) or use WSL.
+
+**Verify Redis is running:**
+```bash
+redis-cli ping
+# Should return: PONG
+```
+
+If Redis is not available, the backend will automatically fall back to operating without cache.
+
+### 4. Environment Configuration
 
 Create a `.env` file in the `backend` directory:
 
@@ -186,7 +244,7 @@ OPENAI_API_KEY=your-openai-api-key-here
 TAVILY_API_KEY=your-tavily-api-key-here
 ```
 
-### 4. Frontend Setup
+### 5. Frontend Setup
 
 ```bash
 cd frontend
@@ -198,7 +256,7 @@ npm install
 npm run dev
 ```
 
-### 5. Run the Application
+### 6. Run the Application
 
 **Terminal 1 - Backend:**
 ```bash
@@ -221,7 +279,7 @@ The agent has access to these specialized tools:
 | Tool | Description | Parameters |
 |------|-------------|------------|
 | `get_stock_price` | Real-time stock price | `ticker` (e.g., "NVDA") |
-| `get_historical_stock_price` | Historical price data | `ticker`, `start_date`, `end_date` |
+| `get_historical_stock_price` | Historical price data with flexible granularity | `ticker`, `start_date`, `end_date`, `frequency` (daily/weekly/monthly/quarterly, default: monthly) |
 | `get_balance_sheet` | Company balance sheet | `ticker` |
 | `get_stock_news` | Latest stock news | `ticker` |
 | `web_search` | Web search via Tavily | `query` |
@@ -316,7 +374,9 @@ The project has been validated for data leaks and security vulnerabilities. See 
 
 ## 📄 License
 
-This project is provided as-is for educational and development purposes.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+Copyright 2024 Nexus Financial Analyst Contributors
 
 ## 🙏 Acknowledgments
 

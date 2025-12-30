@@ -111,12 +111,41 @@ sequenceDiagram
 - Transparência sobre limitações de dados
 - Perguntas de acompanhamento para guiar análises mais profundas
 
+## 🚀 Recursos e Otimizações Principais
+
+### 📦 Cache Redis
+O backend implementa cache inteligente com Redis para melhorar o desempenho:
+- **Cache baseado em TTL**: Diferentes durações de cache para diferentes tipos de dados
+  - Preços de ações: 60 segundos (dados em tempo real)
+  - Preços históricos: 12 horas (relativamente estáveis)
+  - Balanços patrimoniais: 24 horas (atualizados trimestralmente)
+  - Notícias: 1 hora (atualizações frequentes)
+- **Degradação graciosa**: Volta a operar sem cache se o Redis não estiver disponível
+- **Geração de chaves de cache**: Hash MD5 para pesquisas eficientes
+
+### ⚙️ Configuração baseada em TOML
+Os prompts do sistema são gerenciados via `prompt.toml` para fácil personalização:
+- Definições de prompts estruturados com workflows
+- Especificações de UI/UX para cada tipo de análise
+- Regras de conformidade e formatação de saída
+- Fácil de modificar sem alterar o código
+
+### 🎯 Granularidade Flexível de Dados
+Consultas de preços históricos suportam múltiplas opções de frequência:
+- **Diária**: Até 90 dias (para análise de curto prazo)
+- **Semanal**: Até 52 semanas (para tendências de médio prazo)
+- **Mensal**: Até 60 meses (~5 anos, padrão)
+- **Trimestral**: Até 40 trimestres (~10 anos, para análise de longo prazo)
+- Limitação automática de pontos de dados para otimizar o uso de tokens
+
 ## 🛠️ Stack Tecnológico
 
 ### Backend
 - **Framework**: FastAPI
 - **IA/ML**: LangChain, LangGraph, LangSmith, API OpenAI
 - **Fontes de Dados**: yfinance (dados de mercado), Tavily (busca web)
+- **Cache**: Redis (opcional, com cache baseado em TTL)
+- **Configuração**: Prompts do sistema baseados em TOML
 - **Linguagem**: Python 3.10+
 - **Gerenciador de Pacotes**: uv / pip
 
@@ -133,6 +162,7 @@ sequenceDiagram
 - **Python** 3.10+ (para backend)
 - **Chave API OpenAI** ou endpoint LLM compatível
 - **Chave API Tavily** (para funcionalidade de busca web)
+- **Redis** (opcional, para cache - melhora o desempenho)
 
 ## 🚀 Instalação e Configuração
 
@@ -165,7 +195,35 @@ pip install -r requirements.txt
 pip install .
 ```
 
-### 3. Configuração de Ambiente
+### 3. Configuração do Redis (Opcional mas Recomendado)
+
+O cache Redis melhora o desempenho reduzindo chamadas de API e acelerando respostas.
+
+**Linux/WSL:**
+```bash
+sudo apt-get update
+sudo apt-get install redis-server
+sudo service redis-server start
+```
+
+**macOS:**
+```bash
+brew install redis
+brew services start redis
+```
+
+**Windows:**
+Baixe do [Redis para Windows](https://github.com/microsoftarchive/redis/releases) ou use WSL.
+
+**Verificar se o Redis está rodando:**
+```bash
+redis-cli ping
+# Deve retornar: PONG
+```
+
+Se o Redis não estiver disponível, o backend automaticamente volta a operar sem cache.
+
+### 4. Configuração de Ambiente
 
 Crie um arquivo `.env` no diretório `backend`:
 
@@ -184,7 +242,7 @@ OPENAI_API_KEY=sua-chave-openai-aqui
 TAVILY_API_KEY=sua-chave-tavily-aqui
 ```
 
-### 4. Configuração do Frontend
+### 5. Configuração do Frontend
 
 ```bash
 cd frontend
@@ -196,7 +254,7 @@ npm install
 npm run dev
 ```
 
-### 5. Executar a Aplicação
+### 6. Executar a Aplicação
 
 **Terminal 1 - Backend:**
 ```bash
@@ -219,7 +277,7 @@ O agente tem acesso a estas ferramentas especializadas:
 | Ferramenta | Descrição | Parâmetros |
 |------------|-----------|------------|
 | `get_stock_price` | Preço de ação em tempo real | `ticker` (ex: "NVDA") |
-| `get_historical_stock_price` | Dados de preço histórico | `ticker`, `start_date`, `end_date` |
+| `get_historical_stock_price` | Dados de preço histórico com granularidade flexível | `ticker`, `start_date`, `end_date`, `frequency` (diário/semanal/mensal/trimestral, padrão: mensal) |
 | `get_balance_sheet` | Balanço patrimonial da empresa | `ticker` |
 | `get_stock_news` | Notícias mais recentes da ação | `ticker` |
 | `web_search` | Busca web via Tavily | `query` |
@@ -314,7 +372,9 @@ O projeto foi validado quanto a vazamentos de dados e vulnerabilidades de segura
 
 ## 📄 Licença
 
-Este projeto é fornecido como está para fins educacionais e de desenvolvimento.
+Este projeto está licenciado sob a Licença Apache 2.0 - consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
+
+Copyright 2024 Nexus Financial Analyst Contributors
 
 ## 🙏 Agradecimentos
 
