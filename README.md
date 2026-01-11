@@ -1,4 +1,4 @@
-# 📊 Nexus Financial Analyst
+# 📊 Nexus Stock Analyst
 
 > **AI-Powered Financial Analysis Assistant** - A comprehensive platform combining LangChain agents with real-time market data to deliver professional stock analysis, market briefings, and comparative analytics.
 
